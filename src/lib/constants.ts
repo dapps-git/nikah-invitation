@@ -1,7 +1,7 @@
 export const COUPLE = {
-  bride: "Safa Saleem",
-  groom: "Mohamed Gouse",
-  shortName: "Safa & Gouse",
+  bride: "Salwa Nusreen",
+  groom: "Muhammed Sibin",
+  shortName: "Salwa & Sibin",
 };
 
 export const OPENING = {
@@ -18,7 +18,7 @@ export const CREST = {
 
 export const LOGO = {
   src: "/logo/sg.svg",
-  alt: "S & G",
+  alt: "S & S",
 };
 
 export const HERO = {
@@ -39,17 +39,17 @@ export const QURAN_VERSE = {
 export const CLOSING_MESSAGE = "Your presence and duas will make our day truly special.";
 
 export const EVENT = {
-  date: "Sunday, 19 July 2026",
-  dateShort: "Sunday\n19 July 2026",
+  date: "Wednesday, 29 July 2026",
+  dateShort: "Wednesday\n29 July 2026",
   nikahTime: "11:00 AM",
   lunchTime: "12:30 PM",
-  countdownTarget: "2026-07-19T11:00:00",
-  venue: "Othayoth(HO)",
+  countdownTarget: "2026-07-29T11:00:00",
+  venue: "Hitech Regency",
   address:
-    "Kummankode, Nadapuram\nNear Kummankode East Lp school",
-  mapsUrl: "https://maps.app.goo.gl/DV6otS7tspxouqzq5?g_st=ac",
+    "Kappur, Kozhikkara, Kerala",
+  mapsUrl: "https://share.google/1KpWBQnDuyrKwIYql",
   mapsEmbedUrl:
-    "https://maps.google.com/maps?q=Othayoth(HO),Kummankode,Nadapuram,near%20Kummankode%20East%20Lp%20school&output=embed",
+    "https://maps.google.com/maps?q=Hitech%20Regency%20Kappur%20kozhikkara%20Kerala&output=embed",
 };
 
 export const TIMELINE = [
@@ -58,9 +58,9 @@ export const TIMELINE = [
 ];
 
 export const CONTACTS = {
-  familyContact: "+91 9544245999",
-  groomWhatsApp: "+91 9544245999",
-  whatsApp: "+91 9544245999",
+  familyContact: "+91 95620 41866",
+  groomWhatsApp: "+91 95620 41866",
+  whatsApp: "+91 95620 41866",
 };
 
 export const LOCATION = {
@@ -69,13 +69,13 @@ export const LOCATION = {
 };
 
 export const CALENDAR = {
-  title: "Nikah — Safa Saleem & Mohamed Gouse",
+  title: "Nikah — Salwa & Sibin",
   description:
-    "You are invited to witness and celebrate the blessed Nikah of Safa Saleem & Mohamed Gouse.",
+    "You are invited to witness and celebrate the blessed Nikah of Salwa & Sibin.",
   location:
-    "Othayoth(HO) ,Kummankode ,Nadapuram, near Kummankode East Lp school",
-  start: "20260719T110000",
-  end: "20260719T140000",
+    "Hitech Regency, Kappur, Kozhikkara, Kerala",
+  start: "20260729T110000",
+  end: "20260729T140000",
   timezone: "Asia/Kolkata",
 };
 

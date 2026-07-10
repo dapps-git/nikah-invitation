@@ -36,14 +36,14 @@ export const metadata: Metadata = {
   ),
   title: `${COUPLE.shortName} — Nikah Invitation`,
   description:
-    "You are cordially invited to celebrate the Nikah of Safa Saleem & Mohamed Gouse on Sunday, 19 July 2026.",
+    "You are cordially invited to celebrate the Nikah of Salwa Nusreen & Muhammed Sibin on Wednesday, 29 July 2026.",
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
     title: `Nikah Invitation — ${COUPLE.shortName}`,
     description:
-      "Join us in celebrating the Nikah of Safa Saleem & Mohamed Gouse on Sunday, 19 July 2026.",
+      "Join us in celebrating the Nikah of Salwa Nusreen & Muhammed Sibin on Wednesday, 29 July 2026.",
     images: ["/og-image.svg"],
     type: "website",
   },
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `Nikah Invitation — ${COUPLE.shortName}`,
     description:
-      "Join us in celebrating the Nikah of Safa Saleem & Mohamed Gouse on Sunday, 19 July 2026.",
+      "Join us in celebrating the Nikah of Salwa Nusreen & Muhammed Sibin on Wednesday, 29 July 2026.",
     images: ["/og-image.svg"],
   },
 };

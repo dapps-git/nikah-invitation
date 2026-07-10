@@ -85,10 +85,10 @@ export default function Hero() {
         <FadeIn delay={0.55} duration={1}>
           <div className="mt-9 space-y-1 sm:mt-12 sm:space-y-2">
             <p className="font-heading text-xl font-medium text-text-primary sm:text-3xl">
-              Sunday
+              Wednesday
             </p>
             <p className="font-heading text-xl font-light text-text-primary sm:text-3xl">
-              19 July 2026
+              29 July 2026
             </p>
           </div>
         </FadeIn>

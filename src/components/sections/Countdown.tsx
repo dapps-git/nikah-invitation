@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import FadeIn from "@/components/ui/FadeIn";
 import GlassCard from "@/components/ui/GlassCard";
@@ -72,6 +73,21 @@ export default function Countdown() {
         </FadeIn>
 
         <FadeIn delay={0.15} duration={1}>
+          <div className="mx-auto mb-10 max-w-[280px] overflow-hidden rounded-sm border border-gold/30 bg-ivory p-3 shadow-md ornate-panel sm:max-w-xs">
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
+              <Image
+                src="/gallery/couple_cartoon.png"
+                alt="Salwa & Sibin"
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 280px, 320px"
+                priority
+              />
+            </div>
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.3} duration={1}>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
             {UNITS.map(({ key, label }) => (
               <GlassCard

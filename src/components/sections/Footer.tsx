@@ -6,7 +6,7 @@ export default function Footer() {
         With Warm Regards
       </p>
       <p className="mt-2 font-body text-sm tracking-wide text-text-secondary">
-        Othayoth Family
+        From Both Families
       </p>
       <div className="ornamental-line mx-auto mt-6 w-24" />
     </footer>
