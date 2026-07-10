@@ -24,11 +24,25 @@ function prepareElementForCapture(element: HTMLElement): () => void {
     }
   }
 
+  // Flatten couple-name-initial spans so the letter gap disappears in capture
+  element.querySelectorAll(".couple-name-initial").forEach((span) => {
+    if (span instanceof HTMLElement) {
+      span.style.display = "inline";
+      span.style.marginRight = "0";
+    }
+  });
+
   return () => {
     for (const { el, transform, opacity } of snapshots) {
       el.style.transform = transform;
       el.style.opacity = opacity;
     }
+    element.querySelectorAll(".couple-name-initial").forEach((span) => {
+      if (span instanceof HTMLElement) {
+        span.style.display = "";
+        span.style.marginRight = "";
+      }
+    });
   };
 }
 
@@ -49,6 +63,37 @@ function hideExportExcludedElements(element: HTMLElement): () => void {
   };
 }
 
+/** Fetch a Google Font CSS URL and inline all font files as base64 data URIs */
+async function fetchFontAsDataUri(url: string): Promise<string> {
+  try {
+    const response = await fetch(url);
+    const css = await response.text();
+    const fontUrls = [...css.matchAll(/url\((https:\/\/[^)]+)\)/g)].map(
+      (m) => m[1]
+    );
+    let resolvedCss = css;
+    for (const fontUrl of fontUrls) {
+      try {
+        const fontResp = await fetch(fontUrl);
+        const fontBuf = await fontResp.arrayBuffer();
+        const base64 = btoa(
+          String.fromCharCode(...new Uint8Array(fontBuf))
+        );
+        const mime = fontUrl.endsWith(".woff2") ? "font/woff2" : "font/woff";
+        resolvedCss = resolvedCss.replace(
+          `url(${fontUrl})`,
+          `url(data:${mime};base64,${base64})`
+        );
+      } catch {
+        // skip individual font file failures silently
+      }
+    }
+    return resolvedCss;
+  } catch {
+    return "";
+  }
+}
+
 export async function downloadInvitationCard(): Promise<void> {
   const element = document.getElementById("invitation-card");
   if (!element) {
@@ -58,15 +103,32 @@ export async function downloadInvitationCard(): Promise<void> {
 
   const { toPng } = await import("html-to-image");
 
+  // Pre-fetch and embed fonts so they render correctly on mobile captures
+  const [greatVibesCss, cormorantCss] = await Promise.all([
+    fetchFontAsDataUri(
+      "https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+    ),
+    fetchFontAsDataUri(
+      "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
+    ),
+  ]);
+
+  // Inject base64 fonts into a temporary <style> inside the capture element
+  const styleTag = document.createElement("style");
+  styleTag.textContent = greatVibesCss + "\n" + cormorantCss;
+  element.appendChild(styleTag);
+
   const restoreStyles = prepareElementForCapture(element);
   const restoreVisibility = hideExportExcludedElements(element);
 
   try {
     await document.fonts.ready;
+    // Give fonts a moment to apply after injection
+    await new Promise((r) => setTimeout(r, 300));
 
     const width = element.offsetWidth;
     const height = element.scrollHeight;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
 
     const dataUrl = await toPng(element, {
       width,
@@ -95,6 +157,7 @@ export async function downloadInvitationCard(): Promise<void> {
   } catch (error) {
     console.error("Failed to download invitation card:", error);
   } finally {
+    element.removeChild(styleTag);
     restoreVisibility();
     restoreStyles();
   }

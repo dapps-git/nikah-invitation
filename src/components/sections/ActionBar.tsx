@@ -5,7 +5,7 @@ import type { LucideIcon } from "lucide-react";
 import { Download, MapPin, MessageCircle } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { CONTACTS } from "@/lib/constants";
+import { CONTACTS, EVENT } from "@/lib/constants";
 
 const cardClassName =
   "group rounded-sm border border-gold/30 bg-ivory p-5 text-left shadow-[0_10px_28px_rgba(184,134,11,0.1)] transition-all duration-500 hover:-translate-y-1 hover:border-gold/50 hover:bg-ivory hover:shadow-[0_16px_36px_rgba(184,134,11,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60";
@@ -30,8 +30,9 @@ export default function ActionBar() {
       {
         title: "Open Location",
         subtitle: "View directions to venue",
-        href: "#location",
+        href: EVENT.mapsUrl,
         icon: MapPin,
+        external: true,
       },
       {
         title: "WhatsApp",

@@ -28,18 +28,26 @@ export default function EventDetails() {
               </div>
             </GlassCard>
 
-            <GlassCard className="ornate-panel p-8 sm:p-10">
-              <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-off-white">
-                <MapPin className="h-5 w-5 text-gold" strokeWidth={1.5} />
-              </div>
-              <p className="font-body text-xs tracking-[0.12em] uppercase text-text-secondary sm:tracking-[0.2em]">
-                Venue
-              </p>
-              <p className="mt-3 font-heading text-2xl text-text-primary sm:text-3xl">{EVENT.venue}</p>
-              <p className="mt-4 whitespace-pre-line font-body text-base leading-relaxed text-text-secondary">
-                {EVENT.address}
-              </p>
-            </GlassCard>
+            <a
+              href={EVENT.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block transition-transform duration-300 hover:scale-[1.02]"
+            >
+              <GlassCard className="ornate-panel p-8 sm:p-10 h-full">
+                <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-off-white">
+                  <MapPin className="h-5 w-5 text-gold" strokeWidth={1.5} />
+                </div>
+                <p className="font-body text-xs tracking-[0.12em] uppercase text-text-secondary sm:tracking-[0.2em]">
+                  Venue
+                </p>
+                <p className="mt-3 font-heading text-2xl text-text-primary sm:text-3xl">{EVENT.venue}</p>
+                <p className="mt-4 whitespace-pre-line font-body text-base leading-relaxed text-text-secondary">
+                  {EVENT.address}
+                </p>
+                <p className="mt-4 font-body text-xs text-gold-deep underline underline-offset-2">Tap to open in Maps →</p>
+              </GlassCard>
+            </a>
           </div>
         </FadeIn>
       </div>
