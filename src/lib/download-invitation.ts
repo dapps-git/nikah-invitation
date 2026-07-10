@@ -63,35 +63,57 @@ function hideExportExcludedElements(element: HTMLElement): () => void {
   };
 }
 
-/** Fetch a Google Font CSS URL and inline all font files as base64 data URIs */
-async function fetchFontAsDataUri(url: string): Promise<string> {
+/**
+ * Dynamically scans document stylesheets, extracts all @font-face rules,
+ * fetches the font files from the local server, and converts them to base64
+ * data URIs so they render perfectly inside the sandboxed capture SVG canvas.
+ */
+async function getEmbeddedFontFaces(): Promise<string> {
+  let fontRules = "";
   try {
-    const response = await fetch(url);
-    const css = await response.text();
-    const fontUrls = [...css.matchAll(/url\((https:\/\/[^)]+)\)/g)].map(
-      (m) => m[1]
-    );
-    let resolvedCss = css;
-    for (const fontUrl of fontUrls) {
+    for (const sheet of Array.from(document.styleSheets)) {
       try {
-        const fontResp = await fetch(fontUrl);
-        const fontBuf = await fontResp.arrayBuffer();
-        const base64 = btoa(
-          String.fromCharCode(...new Uint8Array(fontBuf))
-        );
-        const mime = fontUrl.endsWith(".woff2") ? "font/woff2" : "font/woff";
-        resolvedCss = resolvedCss.replace(
-          `url(${fontUrl})`,
-          `url(data:${mime};base64,${base64})`
-        );
-      } catch {
-        // skip individual font file failures silently
+        const rules = Array.from(sheet.cssRules || sheet.rules || []);
+        for (const rule of rules) {
+          if (rule instanceof CSSFontFaceRule) {
+            let cssText = rule.cssText;
+            const matches = cssText.match(/url\((['"]?)([^'")]+)\1\)/g);
+            if (matches) {
+              for (const match of matches) {
+                const urlMatch = match.match(/url\((['"]?)([^'")]+)\1\)/);
+                if (urlMatch) {
+                  const fontUrl = urlMatch[2];
+                  if (!fontUrl.startsWith("data:")) {
+                    try {
+                      // Resolve local font relative URL to absolute URL on local dev server
+                      const absoluteUrl = new URL(fontUrl, sheet.href || document.baseURI).href;
+                      const response = await fetch(absoluteUrl);
+                      const blob = await response.blob();
+                      const base64 = await new Promise<string>((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result as string);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                      });
+                      cssText = cssText.replace(match, `url("${base64}")`);
+                    } catch (err) {
+                      console.warn("Failed to inline font locally:", fontUrl, err);
+                    }
+                  }
+                }
+              }
+            }
+            fontRules += cssText + "\n";
+          }
+        }
+      } catch (e) {
+        // Skip cross-origin stylesheet errors (Next.js CSS is local, so this passes)
       }
     }
-    return resolvedCss;
-  } catch {
-    return "";
+  } catch (e) {
+    console.error("Error embedding font-faces:", e);
   }
+  return fontRules;
 }
 
 export async function downloadInvitationCard(): Promise<void> {
@@ -103,46 +125,54 @@ export async function downloadInvitationCard(): Promise<void> {
 
   const { toPng } = await import("html-to-image");
 
-  // Pre-fetch and embed fonts so they render correctly on mobile captures
-  const [greatVibesCss, cormorantCss] = await Promise.all([
-    fetchFontAsDataUri(
-      "https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
-    ),
-    fetchFontAsDataUri(
-      "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
-    ),
-  ]);
+  // Embed active local fonts as base64 to bypass browser SVG sandboxing
+  const embeddedFontsCss = await getEmbeddedFontFaces();
 
-  // Inject base64 fonts into a temporary <style> inside the capture element
   const styleTag = document.createElement("style");
-  styleTag.textContent = greatVibesCss + "\n" + cormorantCss;
+  styleTag.textContent = embeddedFontsCss;
   element.appendChild(styleTag);
 
   const restoreStyles = prepareElementForCapture(element);
   const restoreVisibility = hideExportExcludedElements(element);
 
+  // ── Force desktop-width layout for a clean, consistent captured image ──
+  const EXPORT_WIDTH = 700;
+  const savedWidth    = element.style.width;
+  const savedMaxWidth = element.style.maxWidth;
+  const savedPosition = element.style.position;
+  const savedLeft     = element.style.left;
+
+  element.style.position = "fixed";
+  element.style.left     = "-9999px";
+  element.style.width    = `${EXPORT_WIDTH}px`;
+  element.style.maxWidth = "none";
+
+  // Double requestAnimationFrame to ensure Next.js/Tailwind styles layout updates
+  await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
+  await new Promise((r) => setTimeout(r, 150));
+
   try {
     await document.fonts.ready;
-    // Give fonts a moment to apply after injection
-    await new Promise((r) => setTimeout(r, 300));
+    await new Promise((r) => setTimeout(r, 200));
 
-    const width = element.offsetWidth;
     const height = element.scrollHeight;
-    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    const dpr    = Math.min(window.devicePixelRatio || 1, 3);
 
     const dataUrl = await toPng(element, {
-      width,
+      width:       EXPORT_WIDTH,
       height,
-      canvasWidth: width * dpr,
+      canvasWidth:  EXPORT_WIDTH * dpr,
       canvasHeight: height * dpr,
-      pixelRatio: 1,
-      cacheBust: true,
+      pixelRatio:   1,
+      cacheBust:    true,
       backgroundColor: "#FFFDF9",
       style: {
-        margin: "0",
+        margin:    "0",
         transform: "none",
-        width: `${width}px`,
-        maxWidth: "none",
+        width:     `${EXPORT_WIDTH}px`,
+        maxWidth:  "none",
+        position:  "static",
+        left:      "auto",
       },
       filter: (node) =>
         !(node instanceof HTMLElement && node.dataset.exportHide !== undefined),
@@ -157,6 +187,10 @@ export async function downloadInvitationCard(): Promise<void> {
   } catch (error) {
     console.error("Failed to download invitation card:", error);
   } finally {
+    element.style.width    = savedWidth;
+    element.style.maxWidth = savedMaxWidth;
+    element.style.position = savedPosition;
+    element.style.left     = savedLeft;
     element.removeChild(styleTag);
     restoreVisibility();
     restoreStyles();
