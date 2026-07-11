@@ -1,7 +1,8 @@
 export const COUPLE = {
-  bride: "Salwa Nusreen",
   groom: "Muhammed Sibin",
-  shortName: "Salwa & Sibin",
+  bride: "Salwa Nusreen",
+
+  shortName: "Sibin & Salwa",
 };
 
 export const OPENING = {
@@ -58,9 +59,9 @@ export const TIMELINE = [
 ];
 
 export const CONTACTS = {
-  familyContact: "+91 95620 41866",
-  groomWhatsApp: "+91 95620 41866",
-  whatsApp: "+91 95620 41866",
+  familyContact: "+91 90615 38722",
+  groomWhatsApp: "+91 90615 38722",
+  whatsApp: " +91 90615 38722",
 };
 
 export const LOCATION = {
@@ -69,9 +70,9 @@ export const LOCATION = {
 };
 
 export const CALENDAR = {
-  title: "Nikah — Salwa & Sibin",
+  title: "Nikah — Sibin & Salwa",
   description:
-    "You are invited to witness and celebrate the blessed Nikah of Salwa & Sibin.",
+    "You are invited to witness and celebrate the blessed Nikah of Sibin & Salwa.",
   location:
     "Hitech Regency, Kappur, Kozhikkara, Kerala",
   start: "20260729T110000",

@@ -15,21 +15,10 @@ export default function Footer() {
           href="https://crevionads.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="transition-opacity duration-300 hover:opacity-80 font-bold"
+          className="font-semibold transition-opacity duration-300 hover:opacity-80"
+          style={{ color: "#4E342E" }} // Dark brown
         >
-          {"crevionads.com".split("").map((char, index) => {
-            const isEia = ["e", "i", "a"].includes(char.toLowerCase());
-            return (
-              <span
-                key={index}
-                style={{
-                  color: isEia ? "rgb(244 206 69)" : "rgb(138 50 198 / 0.9)",
-                }}
-              >
-                {char}
-              </span>
-            );
-          })}
+          crevionads.com
         </a>{" "}
         🤎
       </p>
