@@ -1,8 +1,8 @@
 export const COUPLE = {
-  groom: "Muhammed Sibin",
-  bride: "Salwa Nusreen",
+  groom: "Salmanul Faris",
+  bride: "Marjana Yasmin",
 
-  shortName: "Sibin & Salwa",
+  shortName: "Salman & Marjana",
 };
 
 export const OPENING = {
@@ -19,7 +19,7 @@ export const CREST = {
 
 export const LOGO = {
   src: "/logo/sg.svg",
-  alt: "S & S",
+  alt: "S & M",
 };
 
 export const HERO = {
@@ -40,17 +40,17 @@ export const QURAN_VERSE = {
 export const CLOSING_MESSAGE = "Your presence and duas will make our day truly special.";
 
 export const EVENT = {
-  date: "Wednesday, 29 July 2026",
-  dateShort: "Wednesday\n29 July 2026",
+  date: "Thursday, 6 August 2026",
+  dateShort: "Thursday 6 August 2026",
   nikahTime: "11:00 AM",
   lunchTime: "12:30 PM",
-  countdownTarget: "2026-07-29T11:00:00",
-  venue: "Hitech Regency",
+  countdownTarget: "2026-08-06T11:00:00",
+  venue: "Nalanda Convention Centre",
   address:
-    "Kappur, Kozhikkara, Kerala",
-  mapsUrl: "https://maps.app.goo.gl/FCgDbjLuRSb61MCA9",
+    "Nalanda Convention Centre, Malabar Sports Park Rd, Paradiyur, Kerala 679309, India",
+  mapsUrl: "https://maps.app.goo.gl/Q9gD5bCTZLHn3T717",
   mapsEmbedUrl:
-    "https://maps.google.com/maps?q=Hitech%20Regency%20Kappur%20kozhikkara%20Kerala&output=embed",
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3734.257791289152!2d76.1771162!3d10.8944584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba7c926e1a53789%3A0x27e60c7e4375b3ae!2sNalanda%20Convention%20Centre!5e1!3m2!1sen!2sin!4v1784094358965!5m2!1sen!2sin"
 };
 
 export const TIMELINE = [
@@ -59,9 +59,9 @@ export const TIMELINE = [
 ];
 
 export const CONTACTS = {
-  familyContact: "+91 90615 38722",
-  groomWhatsApp: "+91 90615 38722",
-  whatsApp: " +91 90615 38722",
+  familyContact: "8606062467",
+  groomWhatsApp: "8606062467",
+  whatsApp: "8606062467",
 };
 
 export const LOCATION = {
@@ -70,13 +70,13 @@ export const LOCATION = {
 };
 
 export const CALENDAR = {
-  title: "Nikah — Sibin & Salwa",
+  title: "Nikah — Salman & Marjana",
   description:
-    "You are invited to witness and celebrate the blessed Nikah of Sibin & Salwa.",
+    "You are invited to witness and celebrate the blessed Nikah of Salmanul Faris & Marjana Yasmin.",
   location:
-    "Hitech Regency, Kappur, Kozhikkara, Kerala",
-  start: "20260729T110000",
-  end: "20260729T140000",
+    "Nalanda Convention Centre, Malabar Sports Park Rd, Paradiyur, Kerala 679309, India",
+  start: "20260806T110000",
+  end: "20260806T140000",
   timezone: "Asia/Kolkata",
 };
 

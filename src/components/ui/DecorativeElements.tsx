@@ -1,7 +1,17 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+
+function useSafeReducedMotion() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const shouldReduce = useReducedMotion();
+  return shouldReduce && mounted;
+}
 
 export function MosqueSilhouette() {
   return (
@@ -19,7 +29,7 @@ export function MosqueSilhouette() {
 }
 
 export function FloatingFloral({ className = "" }: { className?: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useSafeReducedMotion();
 
   return (
     <motion.div
@@ -40,7 +50,7 @@ export function FloatingFloral({ className = "" }: { className?: string }) {
 }
 
 export function BabysBreath({ className = "" }: { className?: string }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useSafeReducedMotion();
 
   return (
     <motion.div

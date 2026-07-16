@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
@@ -20,7 +21,12 @@ export default function FadeIn({
   direction = "up",
   scale = false,
 }: FadeInProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const shouldReduceMotion = useReducedMotion() && mounted;
 
   const y = shouldReduceMotion
     ? 0

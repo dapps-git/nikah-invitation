@@ -6,7 +6,7 @@ import { QURAN_VERSE } from "@/lib/constants";
 
 export default function Invitation() {
   return (
-    <section id="invitation" className="verse-editorial-section relative overflow-hidden px-6 py-24 sm:py-36">
+    <section id="invitation" className="verse-editorial-section relative overflow-hidden px-6 py-12 sm:py-20">
       <GoldLeaf className="left-6 top-10 opacity-35" />
       <GoldLeaf className="bottom-14 right-8 opacity-35" />
       <div className="mx-auto max-w-6xl">

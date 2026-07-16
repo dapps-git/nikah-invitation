@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import type { ReactNode } from "react";
 
@@ -16,7 +16,12 @@ export default function ParallaxSection({
   offset = 30,
 }: ParallaxSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const shouldReduceMotion = useReducedMotion() && mounted;
 
   const { scrollYProgress } = useScroll({
     target: ref,

@@ -1,81 +1,86 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { LOGO } from "@/lib/constants";
+import { LOGO, OPENING } from "@/lib/constants";
 
-/**
- * S & G logo welcome — short cinematic hold, then handoff to Hero.
- */
-export default function OpeningScreen() {
-  const [mounted, setMounted] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+interface OpeningScreenProps {
+  onOpen?: () => void;
+}
 
-  useEffect(() => {
-    setMounted(true);
-    setVisible(true);
+export default function OpeningScreen({ onOpen }: OpeningScreenProps) {
+  const [tapped, setTapped] = useState(false);
+  const [gone, setGone] = useState(false);
 
-    const timer = setTimeout(
-      () => setVisible(false),
-      shouldReduceMotion ? 400 : 3000,
-    );
+  const handleOpen = () => {
+    if (tapped) return;
+    setTapped(true);
+    if (onOpen) onOpen();
+    setTimeout(() => setGone(true), 1050);
+  };
 
-    return () => clearTimeout(timer);
-  }, [shouldReduceMotion]);
-
-  if (!mounted) {
-    return null;
-  }
+  if (gone) return null;
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.section
-          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-warm-white"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            duration: shouldReduceMotion ? 0.25 : 0.9,
-            ease: [0.4, 0, 0.2, 1],
-          }}
-          aria-hidden
-        >
-          <div className="opening-bg-layer" />
-          {!shouldReduceMotion && (
-            <motion.div
-              className="opening-shimmer-layer"
-              initial={{ x: "-35%" }}
-              animate={{ x: "35%" }}
-              transition={{ duration: 2.4, ease: "easeInOut" }}
-            />
-          )}
+    <div
+      className={`opening-root${tapped ? " opening-root--open" : ""}`}
+      aria-modal="true"
+      role="dialog"
+      aria-label="Wedding Invitation Cover"
+    >
+      {/* Left curtain */}
+      <div className="opening-curtain opening-curtain--left" />
+      {/* Right curtain */}
+      <div className="opening-curtain opening-curtain--right" />
 
-          <motion.div
-            className="relative z-10 flex flex-col items-center"
-            initial={
-              shouldReduceMotion
-                ? { opacity: 1, scale: 1 }
-                : { opacity: 0, scale: 0.86 }
-            }
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: shouldReduceMotion ? 0.2 : 1.15,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            <Image
-              src={LOGO.src}
-              alt={LOGO.alt}
-              width={458}
-              height={425}
-              priority
-              className="opening-logo h-auto w-[min(72vw,18rem)] drop-shadow-[0_10px_42px_rgba(168,127,40,0.35)] sm:w-[min(60vw,28rem)]"
+      {/* Content */}
+      <div className="opening-content">
+
+        {/* Bismillah — small */}
+        <Image
+          src={OPENING.bismillah.src}
+          alt={OPENING.bismillah.alt}
+          width={360}
+          height={120}
+          priority
+          className="opening-bismillah-img"
+        />
+
+        {/* Ornamental line */}
+        <div className="opening-ornament-line" />
+
+        {/* S & M Logo */}
+        <Image
+          src={LOGO.src}
+          alt={LOGO.alt}
+          width={320}
+          height={297}
+          priority
+          className="opening-logo-img"
+        />
+
+        {/* Ornamental line */}
+        <div className="opening-ornament-line" />
+
+        {/* Tap button */}
+        <button
+          type="button"
+          onClick={handleOpen}
+          className="opening-tap-btn"
+          aria-label="Open invitation"
+        >
+          <span className="opening-tap-hand" aria-hidden="true">
+            <img
+              src="/decor/bouquet-icon.png"
+              alt=""
+              className="opening-tap-icon"
+              style={{ mixBlendMode: "multiply", width: "2rem", height: "2.4rem", objectFit: "contain" }}
             />
-          </motion.div>
-        </motion.section>
-      )}
-    </AnimatePresence>
+          </span>
+          <span className="opening-tap-label">Open Invitation</span>
+        </button>
+
+      </div>
+    </div>
   );
 }

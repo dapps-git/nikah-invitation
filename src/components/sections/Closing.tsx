@@ -3,7 +3,7 @@ import { CLOSING_MESSAGE } from "@/lib/constants";
 
 export default function Closing() {
   return (
-    <section className="luxury-section-secondary px-6 py-24 sm:py-32">
+    <section className="luxury-section-secondary px-6 py-12 sm:py-16">
       <div className="mx-auto max-w-2xl text-center">
         <FadeIn duration={1.1}>
           <div className="ornamental-line mx-auto mb-10 w-32" />

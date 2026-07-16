@@ -10,7 +10,7 @@ import { EVENT, LOCATION } from "@/lib/constants";
 
 export default function Location() {
   return (
-    <section id="location" className="pattern-bg px-6 py-24 sm:py-32">
+    <section id="location" className="pattern-bg px-6 py-12 sm:py-16">
       <div className="mx-auto max-w-4xl">
         <FadeIn duration={1.1}>
           <SectionHeading title="Location" subtitle="Join us at the venue" />

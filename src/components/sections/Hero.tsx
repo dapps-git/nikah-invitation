@@ -4,13 +4,8 @@ import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 import OrnamentalDivider from "@/components/ui/OrnamentalDivider";
 import {
-  BabysBreath,
-  Crescent,
-  FloatingFloral,
   GeometricPattern,
   GoldCornerBorders,
-  GoldLeaf,
-  Lantern,
   MosqueSilhouette,
 } from "@/components/ui/DecorativeElements";
 import ScrollIndicator from "@/components/ui/ScrollIndicator";
@@ -20,99 +15,101 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden luxury-section-primary px-4 py-16 sm:px-6 sm:py-32"
+      className="relative flex min-h-[100dvh] items-center justify-center luxury-section-primary px-4 py-10 sm:px-6 sm:py-16"
     >
       <GeometricPattern />
       <MosqueSilhouette />
-      <FloatingFloral className="top-20 left-6 sm:left-16" />
-      <FloatingFloral className="top-28 right-6 sm:right-16" />
-      <BabysBreath className="bottom-40 left-10 hidden sm:block" />
-      <GoldLeaf className="top-32 right-20 hidden md:block" />
-      <GoldLeaf className="bottom-28 left-20 hidden md:block" />
-      <Lantern className="top-16 left-1/4 hidden lg:block" />
-      <Lantern className="top-16 right-1/4 hidden lg:block" />
-      <Crescent className="top-20 right-1/3 hidden lg:block" />
 
-      <div
-        id="invitation-card"
-        className="embossed-frame ornate-panel relative z-10 mx-auto w-full max-w-4xl rounded-sm bg-ivory px-5 py-12 text-center shadow-[0_20px_60px_rgba(184,134,11,0.14)] backdrop-blur-sm sm:px-16 sm:py-24"
-      >
-        <GoldCornerBorders />
+      {/* Invitation card wrapper — extra top padding to make room for the floral arch */}
+      <div className="relative z-10 mx-auto w-full max-w-2xl mt-16 sm:mt-24">
 
-        <FadeIn duration={1.15}>
-          <div className="mx-auto flex max-w-3xl flex-col items-center pt-2 sm:pt-4">
-            <div className="ornamental-line mb-5 w-20 sm:mb-6 sm:w-24" />
-            <div className="bismillah-heading relative mx-auto w-[min(100%,22rem)] sm:w-[28rem]">
-              <Image
-                src={OPENING.bismillah.src}
-                alt={OPENING.bismillah.alt}
-                width={948}
-                height={314}
-                priority
-                className="mx-auto h-auto w-full object-contain"
-                sizes="(max-width: 640px) 22rem, 28rem"
-              />
+        {/* ── Floral Arch — sits above the card, overlapping from the top ── */}
+        <div
+          className="pointer-events-none absolute left-0 right-0 z-20"
+          style={{ top: "-16%", width: "100%" }}
+          aria-hidden
+        >
+          <Image
+            src="/decor/floral-arch.png"
+            alt="Floral decoration"
+            width={1024}
+            height={600}
+            priority
+            className="mx-auto w-full h-auto object-contain"
+            style={{ mixBlendMode: "multiply" }}
+          />
+        </div>
+
+        {/* ── Invitation Card ── */}
+        <div
+          id="invitation-card"
+          className="embossed-frame ornate-panel relative z-10 mx-auto w-full rounded-sm bg-ivory px-5 pt-28 pb-8 text-center shadow-[0_20px_60px_rgba(97,11,20,0.14)] backdrop-blur-sm sm:px-12 sm:pt-36 sm:pb-12"
+        >
+          <GoldCornerBorders />
+
+          <FadeIn duration={1.15}>
+            <div className="mx-auto flex max-w-3xl flex-col items-center">
+              <div className="bismillah-heading relative mx-auto w-[min(100%,11rem)] sm:w-[14rem]">
+                <Image
+                  src={OPENING.bismillah.src}
+                  alt={OPENING.bismillah.alt}
+                  width={948}
+                  height={314}
+                  priority
+                  className="mx-auto h-auto w-full object-contain"
+                  sizes="(max-width: 640px) 11rem, 14rem"
+                />
+              </div>
+              <div className="ornamental-line mt-5 w-20 sm:mt-6 sm:w-24" />
             </div>
-            <div className="ornamental-line mt-5 w-20 sm:mt-6 sm:w-24" />
-          </div>
-        </FadeIn>
+          </FadeIn>
 
-        <FadeIn delay={0.25} duration={1.2} scale>
-          <div className="couple-name-stack mt-12 sm:mt-16">
+          <FadeIn delay={0.2} duration={1.2} scale>
+            <div className="couple-name-stack mt-8 sm:mt-10">
+              <p className="font-body text-xs tracking-[0.18em] uppercase text-text-secondary sm:text-xs sm:tracking-[0.28em] mb-4">
+                {HERO.subtitle}
+              </p>
 
-            <h1 className="couple-name couple-name-gold">
-              <span className="couple-name-initial">{COUPLE.groom.charAt(0)}</span>
-              {COUPLE.groom.slice(1)}
-            </h1>
-            <OrnamentalDivider className="couple-divider sm:my-8" />
-            <h1 className="couple-name couple-name-gold">
-              <span className="couple-name-initial">{COUPLE.bride.charAt(0)}</span>
-              {COUPLE.bride.slice(1)}
-            </h1>
-          </div>
-        </FadeIn>
+              <h1 className="couple-name couple-name-gold">
+                <span className="couple-name-initial">{COUPLE.groom.charAt(0)}</span>
+                {COUPLE.groom.slice(1)}
+              </h1>
+              <OrnamentalDivider className="couple-divider my-4 sm:my-6" />
+              <h1 className="couple-name couple-name-gold">
+                <span className="couple-name-initial">{COUPLE.bride.charAt(0)}</span>
+                {COUPLE.bride.slice(1)}
+              </h1>
+            </div>
+          </FadeIn>
 
-        <FadeIn delay={0.45} duration={1}>
-          <div className="mt-8 sm:mt-12">
-            <p className="font-body text-xs tracking-[0.12em] uppercase text-text-secondary sm:text-sm sm:tracking-[0.2em]">
-              {HERO.subtitle}
-            </p>
-            <p className="hero-support-copy mt-3 font-heading text-lg font-light leading-relaxed sm:mt-4 sm:text-2xl">
+          <FadeIn delay={0.4} duration={1}>
+            <p className="hero-support-copy mt-5 font-heading text-base font-light leading-relaxed sm:mt-6 sm:text-xl">
               {HERO.invitation}
             </p>
-          </div>
-        </FadeIn>
+          </FadeIn>
 
-        <FadeIn delay={0.55} duration={1}>
-          <div className="mt-9 space-y-1 sm:mt-12 sm:space-y-2">
-            <p className="font-heading text-xl font-medium text-text-primary sm:text-3xl">
-              Wednesday
-            </p>
-            <p className="font-heading text-xl font-light text-text-primary sm:text-3xl">
-              29 July 2026
-            </p>
-          </div>
-        </FadeIn>
+          <FadeIn delay={0.55} duration={1}>
+            <div className="mt-8 sm:mt-10 space-y-1">
+              <p className="font-heading text-lg font-medium text-text-primary sm:text-2xl">
+                {EVENT.date}
+              </p>
+            </div>
+          </FadeIn>
 
-        <FadeIn delay={0.7} duration={1}>
-          <div className="mt-8 sm:mt-10">
-            <p className="font-body text-xs tracking-[0.14em] uppercase text-text-secondary sm:tracking-[0.3em]">
-              {HERO.ceremony}
-            </p>
-            <p className="mt-2 font-heading text-3xl text-gold sm:mt-3 sm:text-5xl">
-              {EVENT.nikahTime}
-            </p>
-          </div>
-        </FadeIn>
+          <FadeIn delay={0.7} duration={1}>
+            <div className="mt-5 sm:mt-6">
+              <p className="font-body text-[0.65rem] tracking-[0.18em] uppercase text-text-secondary sm:tracking-[0.28em]">
+                {HERO.ceremony}
+              </p>
+              <p className="mt-2 font-heading text-2xl text-gold sm:mt-3 sm:text-4xl">
+                {EVENT.nikahTime}
+              </p>
+            </div>
+          </FadeIn>
 
-        <FadeIn delay={0.85} duration={1}>
-          <p className="mx-auto mt-8 max-w-2xl font-body text-sm leading-relaxed text-text-secondary italic sm:mt-12 sm:text-lg sm:leading-loose">
-            {HERO.closingLine}
-          </p>
-        </FadeIn>
-
-        <div className="ornamental-line mx-auto mt-8 w-36 sm:mt-10 sm:w-48" />
-        <ScrollIndicator exportHide />
+          <div className="ornamental-line mx-auto mt-6 w-28 sm:mt-8 sm:w-36" />
+          <ScrollIndicator exportHide />
+        </div>
       </div>
     </section>
   );

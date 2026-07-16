@@ -66,7 +66,7 @@ export default function Countdown() {
   }, []);
 
   return (
-    <section className="luxury-section-secondary px-6 py-24 sm:py-32">
+    <section className="luxury-section-secondary px-6 py-12 sm:py-16">
       <div className="mx-auto max-w-4xl">
         <FadeIn duration={1}>
           <SectionHeading title="Countdown" subtitle="Until our blessed day" />
@@ -77,7 +77,7 @@ export default function Countdown() {
             <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
               <Image
                 src="/gallery/couple_cartoon.png"
-                alt="Salwa & Sibin"
+                alt="Salman & Marjana"
                 fill
                 className="object-cover"
                 sizes="(max-width: 640px) 280px, 320px"

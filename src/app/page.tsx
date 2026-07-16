@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import OpeningScreen from "@/components/sections/OpeningScreen";
 import Hero from "@/components/sections/Hero";
 import Countdown from "@/components/sections/Countdown";
@@ -12,10 +15,12 @@ import LocationJump from "@/components/ui/LocationJump";
 import MusicToggle from "@/components/ui/MusicToggle";
 
 export default function Home() {
+  const [isOpened, setIsOpened] = useState(false);
+
   return (
     <>
       <main className="paper-grain">
-        <OpeningScreen />
+        <OpeningScreen onOpen={() => setIsOpened(true)} />
         <Hero />
         <Countdown />
         <Invitation />
@@ -24,7 +29,7 @@ export default function Home() {
         <Closing />
         <ActionBar />
         <Footer />
-        <FloatingPetals />
+        <FloatingPetals isOpened={isOpened} />
       </main>
 
       <div className="fixed right-4 bottom-4 z-[110] flex flex-col-reverse gap-3">

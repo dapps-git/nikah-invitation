@@ -66,7 +66,7 @@ export default function ActionBar() {
 
   return (
     <>
-      <section className="luxury-section-elevated px-6 py-24 sm:py-32">
+      <section className="luxury-section-elevated px-6 py-12 sm:py-16">
         <div className="mx-auto max-w-4xl">
           <FadeIn duration={1.1}>
             <SectionHeading title="Stay Connected" subtitle="Essential Actions" />

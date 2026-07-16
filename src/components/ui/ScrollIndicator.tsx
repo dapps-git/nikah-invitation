@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
@@ -8,7 +9,12 @@ interface ScrollIndicatorProps {
 }
 
 export default function ScrollIndicator({ exportHide = false }: ScrollIndicatorProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const shouldReduceMotion = useReducedMotion() && mounted;
 
   return (
     <motion.a
